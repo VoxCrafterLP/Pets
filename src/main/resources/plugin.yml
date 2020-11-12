@@ -1,0 +1,13 @@
+name: Pets
+version: 0.1
+api-version: 1.8.8
+author: VoxCrafter_LP
+main: com.voxcrafterlp.pets.Pets
+softdepend:
+  - Vault
+
+commands:
+  pet:
+    description: The main command
+    aliases:
+      - pets

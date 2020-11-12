@@ -1,13 +1,20 @@
 package com.voxcrafterlp.pets.gui;
 
+import com.google.common.collect.Lists;
 import com.voxcrafterlp.pets.Pets;
+import com.voxcrafterlp.pets.enums.PetType;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
+import com.voxcrafterlp.pets.objects.PetData;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * This file was created by VoxCrafter_LP!
@@ -47,6 +54,39 @@ public class InventoryClickListener implements Listener {
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 return;
             }
+            if(event.getCurrentItem().getType() == Material.SKULL_ITEM) {
+                PetType petType = PetType.getPetTypeFromDisplayName(event.getCurrentItem().getItemMeta().getDisplayName());
+                PlayerPetManager playerPetManager = PlayerPetManager.getPlayers().get(player);
+
+                if(playerPetManager.getSpawnedPet() != null) {
+                    if(playerPetManager.getSpawnedPet().getPetType().equals(petType)) {
+                        player.sendMessage(Pets.getInstance().getPrefix() + "§7You despawned your §cpet§7.");
+                        player.closeInventory();
+                        player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
+                        playerPetManager.disableSpawnedPet();
+                        playerPetManager.despawnPet();
+                        try {
+                            playerPetManager.getPetGUI().buildInventories();
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                            player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                            e.printStackTrace();
+                        }
+                        return;
+                    }
+                }
+
+                player.closeInventory();
+                player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
+
+                try {
+                    playerPetManager.spawnPet(new PetData(player, petType.getClassName(), getRandomColorCode() + petType.getClassName(), player.getLocation(), false, true));
+                    player.sendMessage(Pets.getInstance().getPrefix() + "§b" + petType.getClassName() + " §7summoned successfully. §8(§7Rightclick to manage§8)");
+                    playerPetManager.getPetGUI().buildInventories();
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                    player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                    e.printStackTrace();
+                }
+            }
         }
         if(event.getInventory().getName().equals(" §8➜ §bShop")) {
             event.setCancelled(true);
@@ -59,10 +99,17 @@ public class InventoryClickListener implements Listener {
         if(event.getInventory().getName().equals(" §8➜ §cPet")) {
             event.setCancelled(true);
             if(event.getCurrentItem().getType() == Material.BARRIER) {
+                PlayerPetManager.getPlayers().get(player).disableSpawnedPet();
                 PlayerPetManager.getPlayers().get(player).despawnPet();
                 player.sendMessage(Pets.getInstance().getPrefix() + "§7You picked your §cpet §7up.");
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
+                try {
+                    PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                    e.printStackTrace();
+                }
                 return;
             }
             if(event.getCurrentItem().getType() == Material.HAY_BLOCK) {
@@ -83,4 +130,10 @@ public class InventoryClickListener implements Listener {
             }
         }
     }
+
+    private String getRandomColorCode() {
+        String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
+        return string[new Random().nextInt(string.length)];
+    }
+
 }

@@ -27,5 +27,7 @@ pets:
 pet-radius: 10
 # Determines if a pet can take damage
 pet-invulnerable: true
+# Determines if the pets should receive a random colored name
+random-color: true
 # To change the language, please provide an existing language file in the 'lang' folder
 language-file: US_en.lang

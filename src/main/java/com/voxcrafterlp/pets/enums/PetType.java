@@ -38,9 +38,9 @@ public enum PetType {
         return null;
     }
 
-    public static  PetType getPetTypeFromIcon(ItemStack icon) {
+    public static  PetType getPetTypeFromDisplayName(String string) {
         for(PetType petType : PetType.values()) {
-            if(petType.getIcon().equals(icon))
+            if(string.startsWith(petType.getIcon().getItemMeta().getDisplayName()))
                 return petType;
         }
         return null;

@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This file was created by VoxCrafter_LP!
@@ -70,9 +71,21 @@ public class PlayerPetManager {
 
             for(int i = 0; i< jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length(); i++) {
                 JSONObject pet = jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").getJSONObject(i);
-                this.pets.add(new PetData(player, pet.getString("type"), pet.getString("name"), null, false, pet.getBoolean("enabled")));
+                this.pets.add(new PetData(player, pet.getString("type"), getRandomColorCode() + pet.getString("name"), player.getLocation(), false, pet.getBoolean("enabled")));
             }
         }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Pets.getInstance(), () -> {
+            this.pets.forEach(petData -> {
+                if(petData.isEnabled()) {
+                    try {
+                        this.spawnPet(petData);
+                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                        player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }, 10);
     }
 
     public void savePlayerData() throws IOException {
@@ -81,7 +94,7 @@ public class PlayerPetManager {
         String line;
         while ((line = bufferedReader.readLine()) != null) {
 
-            if(isValidJsSON(line)) {
+            if(isValidJSON(line)) {
                 JSONObject jsonObject = new JSONObject(line);
                 JSONArray jsonArray = new JSONArray();
 
@@ -106,7 +119,7 @@ public class PlayerPetManager {
         players.remove(player);
     }
 
-    private boolean isValidJsSON(String string) {
+    private boolean isValidJSON(String string) {
         try {
             new JSONObject(string);
             return true;
@@ -121,24 +134,47 @@ public class PlayerPetManager {
 
         CustomPet customPet = clazz.newInstance();
         customPet.set(petData);
-
         this.spawnedPet = customPet;
+
         this.getPets().forEach(pet -> {
             if(pet.getPetType().equalsIgnoreCase(petData.getPetType())) {
                 pet.setEnabled(true);
                 pet.setSitting(false);
             }
         });
-
         schedulerID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Pets.getInstance(), customPet::onTick, 10, 4);
     }
 
     public void despawnPet() {
         if(this.spawnedPet != null) {
             Bukkit.getScheduler().cancelTask(this.schedulerID);
+            this.pets.forEach(petData -> {
+                if(petData.getPetType().equalsIgnoreCase(this.spawnedPet.getPetType().getClassName())) {
+                    petData.setSitting(false);
+                }
+            });
             this.spawnedPet.remove();
             this.spawnedPet = null;
+
+            try {
+                this.savePlayerData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public void disableSpawnedPet() {
+        this.pets.forEach(petData -> {
+            if(petData.getPetType().equalsIgnoreCase(this.spawnedPet.getPetType().getClassName())) {
+                petData.setEnabled(false);
+            }
+        });
+    }
+
+    private String getRandomColorCode() {
+        String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
+        return string[new Random().nextInt(string.length)];
     }
 
     public static HashMap<Player, PlayerPetManager> getPlayers() { return players; }

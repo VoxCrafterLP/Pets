@@ -1,0 +1,12 @@
+message.error=§cSomething went wrong! Please read the logs for more information!
+message.nopermissions=§7You §care not permitted §7to execute this command!
+message.invalidplayer=§cInvalid player!
+message.invalidpet=§cInvalid pet! §7Valid pets are§8: §aChickenPet§8, §aCatPet§8, §aWolfPet§8, §aSlimePet§8, §aSquidPet§8, §aRabbitPet
+message.syntaxerror=§cWrong syntax! §7Please use §c/pet give <player> <pet> §7or §c/pet
+message.playeralreadyownspet=§cThis player already has this pet!
+message.give.success=§a {0} §7received a §a{1}§7.
+message.give.receiver=§a{0} §7gave you a §a{1}§7.
+
+container.welcome.title= §8➜ §cPets
+container.welcome.ownpets= §8➜ §cYour pets
+container.welcome.shop= §8➜ §bShop

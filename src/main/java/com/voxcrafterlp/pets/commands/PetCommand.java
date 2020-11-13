@@ -37,18 +37,6 @@ public class PetCommand implements CommandExecutor {
             }
             if(args.length == 3) {
                 if(args[0].equalsIgnoreCase("give")) {
-                    /*try {
-                        PlayerPetManager.getPlayers().get(player).spawnPet(new PetData(player, "ChickenPet", "§cMoin Meista", player.getLocation(), false, true));
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    }
-
-                    player.sendMessage("test");*/
-
                     String petString = args[2].toLowerCase();
 
                     if(Bukkit.getPlayer(args[1]) == null) {

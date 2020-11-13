@@ -74,6 +74,11 @@ public class PlayerPetManager {
                 this.pets.add(new PetData(player, pet.getString("type"), getRandomColorCode() + pet.getString("name"), player.getLocation(), false, pet.getBoolean("enabled")));
             }
         }
+        if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
+            player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
+            return;
+        }
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(Pets.getInstance(), () -> {
             this.pets.forEach(petData -> {
                 if(petData.isEnabled()) {
@@ -173,8 +178,10 @@ public class PlayerPetManager {
     }
 
     private String getRandomColorCode() {
-        String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
-        return string[new Random().nextInt(string.length)];
+        if(Pets.getInstance().getPetsConfig().isRandomColor()) {
+            String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
+            return string[new Random().nextInt(string.length)];
+        } else return "§c";
     }
 
     public static HashMap<Player, PlayerPetManager> getPlayers() { return players; }

@@ -85,12 +85,12 @@ public class PetGUI {
                 if(PlayerPetManager.getPlayers().get(player).getPets().isEmpty()) {
                     shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + 1000).build());
                 } else
-                PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
-                    if(petData.getPetType().equalsIgnoreCase(petType.getClassName()))
-                        shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
-                    else
-                        shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + 1000).build());
-                });
+                    PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
+                        if(petData.getPetType().equalsIgnoreCase(petType.getClassName()))
+                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
+                        else
+                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + 1000).build());
+                    });
                 slot++;
 
                 //Class<CustomPet> clazz = (Class<CustomPet>) Class.forName("com.voxcrafterlp.pets.custompets." + petType.getClassName());

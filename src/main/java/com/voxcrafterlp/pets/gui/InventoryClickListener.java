@@ -75,6 +75,13 @@ public class InventoryClickListener implements Listener {
                     }
                 }
 
+                if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
+                    player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
+                    player.closeInventory();
+                    player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
+                    return;
+                }
+
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
 
@@ -101,7 +108,7 @@ public class InventoryClickListener implements Listener {
             if(event.getCurrentItem().getType() == Material.BARRIER) {
                 PlayerPetManager.getPlayers().get(player).disableSpawnedPet();
                 PlayerPetManager.getPlayers().get(player).despawnPet();
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7You picked your §cpet §7up.");
+                player.sendMessage(Pets.getInstance().getPrefix() + "§7You picked up your §cpet§7.");
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 try {
@@ -132,8 +139,10 @@ public class InventoryClickListener implements Listener {
     }
 
     private String getRandomColorCode() {
-        String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
-        return string[new Random().nextInt(string.length)];
+        if(Pets.getInstance().getPetsConfig().isRandomColor()) {
+            String[] string = new String[]{"§a", "§2", "§c", "§d", "§5", "§b", "§6"};
+            return string[new Random().nextInt(string.length)];
+        } else return "§c";
     }
 
 }

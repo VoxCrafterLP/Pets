@@ -1,5 +1,6 @@
 package com.voxcrafterlp.pets.listener;
 
+import com.voxcrafterlp.pets.Pets;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +20,7 @@ public class EntityDamageListener implements Listener {
      */
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
+        if(!Pets.getInstance().getPetsConfig().isPetInvulnerability()) return;
         PlayerPetManager.getPlayers().forEach((player, playerPetManager) -> {
             if(playerPetManager.getSpawnedPet() != null) {
                 if(playerPetManager.getSpawnedPet().getEntity().equals(event.getEntity()))

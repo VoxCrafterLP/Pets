@@ -24,12 +24,7 @@ public class EntityDeathListener implements Listener {
                 if(playerPetManager.getSpawnedPet().getEntity().equals(event.getEntity())) {
                     PlayerPetManager.getPlayers().get(player).disableSpawnedPet();
                     PlayerPetManager.getPlayers().get(player).despawnPet();
-                    try {
-                        PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
-                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
-                        e.printStackTrace();
-                    }
+                    PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
 
                     player.sendMessage(Pets.getInstance().getPrefix() + "§7Your pet has been §ckilled§7.");
                     player.playSound(player.getLocation(), Sound.ENDERMAN_DEATH,1,1);

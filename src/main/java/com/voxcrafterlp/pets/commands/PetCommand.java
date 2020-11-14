@@ -72,7 +72,7 @@ public class PetCommand implements CommandExecutor {
                         targetPlayer.sendMessage(Pets.getInstance().getPrefix() + "§a" + player.getName() + " §7gave you a §a" + petType.getClassName() + "§7.");
 
                         PlayerPetManager.getPlayers().get(targetPlayer).getPetGUI().buildInventories();
-                    } catch (IOException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
+                    } catch (IOException e) {
                         player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
                         e.printStackTrace();
                     }

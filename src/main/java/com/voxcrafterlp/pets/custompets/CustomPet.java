@@ -17,7 +17,6 @@ public abstract class CustomPet {
     public abstract CustomPet getPet();
     public abstract PetData getPetData();
     public abstract PetType getPetType();
-    public abstract int getPrice();
     public abstract Entity getEntity();
     public abstract Entity spawn();
     public abstract void onTick();

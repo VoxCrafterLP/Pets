@@ -6,8 +6,10 @@ import com.voxcrafterlp.pets.config.PetsConfig;
 import com.voxcrafterlp.pets.gui.InventoryClickListener;
 import com.voxcrafterlp.pets.listener.*;
 import lombok.Getter;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
@@ -28,6 +30,8 @@ public class Pets extends JavaPlugin {
     private PetsConfig petsConfig;
     private LanguageLoader languageLoader;
 
+    private Economy economy;
+
     public void onEnable() {
         instance = this;
 
@@ -36,11 +40,7 @@ public class Pets extends JavaPlugin {
         this.loadCommands();
         this.loadListener();
 
-        try {
-            this.loadConfig();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.loadConfig();
     }
 
     private void loadCommands() {
@@ -60,7 +60,7 @@ public class Pets extends JavaPlugin {
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
     }
 
-    private void loadConfig() throws IOException {
+    private void loadConfig() {
         this.loadLanguages();
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
@@ -91,6 +91,24 @@ public class Pets extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage("§cDisabling the plugin");
             Bukkit.getConsoleSender().sendMessage("§8===========================================");
 
+            Bukkit.getPluginManager().disablePlugin(this);
+            return false;
+        }
+
+        RegisteredServiceProvider<Economy> registeredServiceProvider = getServer().getServicesManager().getRegistration(Economy.class);
+        if(registeredServiceProvider == null) {
+            Bukkit.getConsoleSender().sendMessage("§cAn error occurred while initializing Vault...");
+            Bukkit.getConsoleSender().sendMessage("§cPlease check the configuration of your money plugin!");
+            Bukkit.getConsoleSender().sendMessage("§8===========================================");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return false;
+        }
+
+        this.economy = registeredServiceProvider.getProvider();
+        if(this.economy == null) {
+            Bukkit.getConsoleSender().sendMessage("§cAn error occurred while initializing Vault...");
+            Bukkit.getConsoleSender().sendMessage("§cPlease check the configuration of your money plugin!");
+            Bukkit.getConsoleSender().sendMessage("§8===========================================");
             Bukkit.getPluginManager().disablePlugin(this);
             return false;
         }

@@ -1,6 +1,7 @@
 package com.voxcrafterlp.pets.gui;
 
 import com.voxcrafterlp.pets.Pets;
+import com.voxcrafterlp.pets.custompets.CustomPet;
 import com.voxcrafterlp.pets.enums.PetType;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import com.voxcrafterlp.pets.utils.ItemManager;
@@ -30,14 +31,10 @@ public class PetGUI {
 
     public PetGUI(Player player) {
         this.player = player;
-        try {
-            this.buildInventories();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
+        this.buildInventories();
     }
 
-    public void buildInventories() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public void buildInventories() {
         //==================================================//
         {
             this.welcomeInventory = Bukkit.createInventory(null, 27, " §8➜ §cPets v" + Pets.getInstance().getDescription().getVersion());
@@ -61,11 +58,13 @@ public class PetGUI {
                 PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
                     for(PetType petType : PetType.values()) {
                         if(petData.getPetType().equalsIgnoreCase(petType.getClassName())) {
-                            if(petData.isEnabled())
-                                this.ownInventory.setItem(slot.get(), new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §aactive").build());
-                            else
-                                this.ownInventory.setItem(slot.get(), new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §cinactive").build());
-                            slot.getAndIncrement();
+                            if(Pets.getInstance().getPetsConfig().getEnabledPets().get(petType.getClassName())) {
+                                if(petData.isEnabled())
+                                    this.ownInventory.setItem(slot.get(), new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §aactive").build());
+                                else
+                                    this.ownInventory.setItem(slot.get(), new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §cinactive").build());
+                                slot.getAndIncrement();
+                            }
                         }
                     }
                 });
@@ -81,20 +80,19 @@ public class PetGUI {
             int slot = 0;
 
             for(PetType petType : PetType.values()) {
-                int finalSlot = slot;
-                if(PlayerPetManager.getPlayers().get(player).getPets().isEmpty()) {
-                    shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + 1000).build());
-                } else
-                    PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
-                        if(petData.getPetType().equalsIgnoreCase(petType.getClassName()))
-                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
-                        else
-                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + 1000).build());
-                    });
-                slot++;
-
-                //Class<CustomPet> clazz = (Class<CustomPet>) Class.forName("com.voxcrafterlp.pets.custompets." + petType.getClassName());
-                //System.out.println("Test:" +clazz.newInstance().getPrice());
+                if(Pets.getInstance().getPetsConfig().getEnabledPets().get(petType.getClassName())) {
+                    int finalSlot = slot;
+                    if(PlayerPetManager.getPlayers().get(player).getPets().isEmpty()) {
+                        shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName())).build());
+                    } else
+                        PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
+                            if(petData.getPetType().equalsIgnoreCase(petType.getClassName()))
+                                shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
+                            else
+                                shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName())).build());
+                        });
+                    slot++;
+                }
             }
         }
 

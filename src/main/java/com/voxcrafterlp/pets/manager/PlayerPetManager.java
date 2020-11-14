@@ -81,12 +81,14 @@ public class PlayerPetManager {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Pets.getInstance(), () -> {
             this.pets.forEach(petData -> {
-                if(petData.isEnabled()) {
-                    try {
-                        this.spawnPet(petData);
-                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
-                        e.printStackTrace();
+                if(Pets.getInstance().getPetsConfig().getEnabledPets().get(petData.getPetType())) {
+                    if(petData.isEnabled()) {
+                        try {
+                            this.spawnPet(petData);
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                            player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                            e.printStackTrace();
+                        }
                     }
                 }
             });

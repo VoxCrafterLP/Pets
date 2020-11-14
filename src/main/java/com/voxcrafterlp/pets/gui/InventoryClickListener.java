@@ -5,6 +5,7 @@ import com.voxcrafterlp.pets.Pets;
 import com.voxcrafterlp.pets.enums.PetType;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import com.voxcrafterlp.pets.objects.PetData;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -65,12 +67,7 @@ public class InventoryClickListener implements Listener {
                         player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                         playerPetManager.disableSpawnedPet();
                         playerPetManager.despawnPet();
-                        try {
-                            playerPetManager.getPetGUI().buildInventories();
-                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                            player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
-                            e.printStackTrace();
-                        }
+                        playerPetManager.getPetGUI().buildInventories();
                         return;
                     }
                 }
@@ -102,6 +99,43 @@ public class InventoryClickListener implements Listener {
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 return;
             }
+            if(event.getCurrentItem().getType() == Material.SKULL_ITEM) {
+                PetType petType = PetType.getPetTypeFromDisplayName(event.getCurrentItem().getItemMeta().getDisplayName());
+                PlayerPetManager playerPetManager = PlayerPetManager.getPlayers().get(player);
+
+                playerPetManager.getPets().forEach(petData -> {
+                    if(petData.getPetType().equalsIgnoreCase(petType.getClassName())) {
+                        player.sendMessage(Pets.getInstance().getPrefix() + "§7You have already §cpurchased §7this pet.");
+                        player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
+                        return;
+                    }
+                });
+
+                double balance = Pets.getInstance().getEconomy().getBalance(player);
+                double price = Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName());
+                double difference = balance - price;
+
+                if(difference < 0) {
+                    player.sendMessage(Pets.getInstance().getPrefix() + "§7You don't have enough §cmoney §7to buy this §cpet§7!");
+                    player.playSound(player.getLocation(), Sound.ITEM_BREAK,1,1);
+                    return;
+                }
+
+                Pets.getInstance().getEconomy().withdrawPlayer(player, price);
+
+                try {
+                    playerPetManager.getPets().add(new PetData(player, petType.getClassName(), petType.getClassName(), null, false, false));
+                    playerPetManager.savePlayerData();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                player.sendMessage(Pets.getInstance().getPrefix() + "§7You successfully bought the §a" + petType.getClassName() + " §7for §2" + Pets.getInstance().getEconomy().format(price) + "§7.");
+                player.playSound(player.getLocation(), Sound.LEVEL_UP,1,1);
+
+                playerPetManager.getPetGUI().buildInventories();
+                player.openInventory(playerPetManager.getPetGUI().getShopInventory());
+            }
         }
         if(event.getInventory().getName().equals(" §8➜ §cPet")) {
             event.setCancelled(true);
@@ -111,12 +145,7 @@ public class InventoryClickListener implements Listener {
                 player.sendMessage(Pets.getInstance().getPrefix() + "§7You picked up your §cpet§7.");
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
-                try {
-                    PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
-                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
-                    e.printStackTrace();
-                }
+                PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
                 return;
             }
             if(event.getCurrentItem().getType() == Material.HAY_BLOCK) {

@@ -26,12 +26,7 @@ public class PlayerChangedWorldListener implements Listener {
                 player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
                 playerPetManager.disableSpawnedPet();
                 playerPetManager.despawnPet();
-                try {
-                    PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
-                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
-                    e.printStackTrace();
-                }
+                playerPetManager.getPetGUI().buildInventories();
             }
         }
     }

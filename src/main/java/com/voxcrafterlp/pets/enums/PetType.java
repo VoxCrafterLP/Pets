@@ -15,12 +15,12 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 public enum PetType {
 
-    CHICKEN("ChickenPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bChickenPet").addLore("§8§m------------------", " ", "§7Saturation (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Chicken")),
-    CAT("CatPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bCatPet").addLore("§8§m------------------", " ", "§7Speed I (10x10)", "§7Haste I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("jarkpzf")),
-    WOLF("WolfPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bWolfPet").addLore("§8§m------------------", " ", "§7Strength I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("Olinek122")),
-    SLIME("SlimePet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bSlimePet").addLore("§8§m------------------", " ", "§7Fireresistance I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Slime")),
-    SQUID("SquidPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bSquidPet").addLore("§8§m------------------", " ", "§7Waterbreathing I (10x10)", "§7Nightvision I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Squid")),
-    RABBIT("RabbitPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bRabbitPet").addLore("§8§m------------------", " ", "§7Jumpboost I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("albino"));
+    CHICKEN("ChickenPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bChickenPet").addLore("§8§m------------------", " ", "§7Saturation (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Chicken"));
+    //CAT("CatPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bCatPet").addLore("§8§m------------------", " ", "§7Speed I (10x10)", "§7Haste I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("jarkpzf")),
+    //WOLF("WolfPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bWolfPet").addLore("§8§m------------------", " ", "§7Strength I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("Olinek122")),
+    //SLIME("SlimePet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bSlimePet").addLore("§8§m------------------", " ", "§7Fireresistance I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Slime")),
+    //SQUID("SquidPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bSquidPet").addLore("§8§m------------------", " ", "§7Waterbreathing I (10x10)", "§7Nightvision I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("MHF_Squid")),
+    //RABBIT("RabbitPet", new ItemManager(Material.SKULL_ITEM, 3).setDisplayName(" §7➥ §bRabbitPet").addLore("§8§m------------------", " ", "§7Jumpboost I (10x10)", " ", "§8§m------------------").setHeadOwnerAndBuild("albino"));
 
     private final String className;
     private final ItemStack icon;

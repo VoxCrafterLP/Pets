@@ -4,22 +4,22 @@ worlds-disabled:
   - world_the_end
 
 pets:
-  chicken:
+  ChickenPet:
     price: 100
     enabled: true
-  cat:
+  CatPet:
     price: 100
     enabled: true
-  dog:
+  DogPet:
     price: 100
     enabled: true
-  slime:
+  SlimePet:
     price: 100
     enabled: true
-  squid:
+  SquidPet:
     price: 100
     enabled: true
-  rabbit:
+  RabbitPet:
     price: 100
     enabled: true
 

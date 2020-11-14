@@ -44,8 +44,6 @@ public class ChickenPet extends CustomPet {
         return PetType.CHICKEN;
     }
 
-    public int getPrice() { return 1000; } //CONFIG
-
     public Entity getEntity() {
         return this.entity;
     }

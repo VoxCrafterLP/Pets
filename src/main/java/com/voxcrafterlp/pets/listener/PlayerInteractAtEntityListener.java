@@ -1,11 +1,15 @@
 package com.voxcrafterlp.pets.listener;
 
+import com.voxcrafterlp.pets.Pets;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import com.voxcrafterlp.pets.utils.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -25,6 +29,7 @@ public class PlayerInteractAtEntityListener implements Listener {
         Player player = event.getPlayer();
         if(PlayerPetManager.getPlayers().get(player).getSpawnedPet() != null) {
             if(PlayerPetManager.getPlayers().get(player).getSpawnedPet().getEntity().equals(event.getRightClicked())) {
+                event.setCancelled(true);
                 Inventory inventory = Bukkit.createInventory(null, 27, " §8➜ §cPet");
 
                 for(int i = 0; i<27; i++)

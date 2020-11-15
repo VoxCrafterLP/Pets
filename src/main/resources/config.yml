@@ -5,22 +5,19 @@ worlds-disabled:
 
 pets:
   ChickenPet:
-    price: 100
+    price: 500
     enabled: true
   CatPet:
-    price: 100
+    price: 1500
     enabled: true
-  DogPet:
-    price: 100
+  WolfPet:
+    price: 1500
     enabled: true
   SlimePet:
-    price: 100
-    enabled: true
-  SquidPet:
-    price: 100
+    price: 800
     enabled: true
   RabbitPet:
-    price: 100
+    price: 1000
     enabled: true
 
 # The radius of the pets' effects

@@ -1,7 +1,6 @@
 package com.voxcrafterlp.pets.gui;
 
 import com.voxcrafterlp.pets.Pets;
-import com.voxcrafterlp.pets.custompets.CustomPet;
 import com.voxcrafterlp.pets.enums.PetType;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import com.voxcrafterlp.pets.utils.ItemManager;
@@ -11,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -82,20 +82,24 @@ public class PetGUI {
             for(PetType petType : PetType.values()) {
                 if(Pets.getInstance().getPetsConfig().getEnabledPets().get(petType.getClassName())) {
                     int finalSlot = slot;
-                    if(PlayerPetManager.getPlayers().get(player).getPets().isEmpty()) {
+                    if(PlayerPetManager.getPlayers().get(player).getPets().isEmpty())
                         shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName())).build());
-                    } else
+                     else {
+                         AtomicBoolean contains = new AtomicBoolean(false);
+
                         PlayerPetManager.getPlayers().get(player).getPets().forEach(petData -> {
                             if(petData.getPetType().equalsIgnoreCase(petType.getClassName()))
-                                shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
-                            else
-                                shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName())).build());
+                                contains.set(true);
                         });
+
+                        if(contains.get())
+                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| §apurchased").build());
+                        else
+                            shopInventory.setItem(finalSlot, new ItemManager(petType.getIcon().clone()).addDisplayName(" §7| Price§8: §b" + Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName())).build());
+                    }
                     slot++;
                 }
             }
         }
-
     }
-
 }

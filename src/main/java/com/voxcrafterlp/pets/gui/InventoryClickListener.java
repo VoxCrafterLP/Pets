@@ -1,11 +1,9 @@
 package com.voxcrafterlp.pets.gui;
 
-import com.google.common.collect.Lists;
 import com.voxcrafterlp.pets.Pets;
 import com.voxcrafterlp.pets.enums.PetType;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
 import com.voxcrafterlp.pets.objects.PetData;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,9 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * This file was created by VoxCrafter_LP!
@@ -70,6 +67,9 @@ public class InventoryClickListener implements Listener {
                         playerPetManager.getPetGUI().buildInventories();
                         return;
                     }
+                    playerPetManager.disableSpawnedPet();
+                    playerPetManager.despawnPet();
+                    playerPetManager.getPetGUI().buildInventories();
                 }
 
                 if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
@@ -103,13 +103,17 @@ public class InventoryClickListener implements Listener {
                 PetType petType = PetType.getPetTypeFromDisplayName(event.getCurrentItem().getItemMeta().getDisplayName());
                 PlayerPetManager playerPetManager = PlayerPetManager.getPlayers().get(player);
 
+                AtomicBoolean bought = new AtomicBoolean(false);
+
                 playerPetManager.getPets().forEach(petData -> {
                     if(petData.getPetType().equalsIgnoreCase(petType.getClassName())) {
                         player.sendMessage(Pets.getInstance().getPrefix() + "§7You have already §cpurchased §7this pet.");
                         player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
-                        return;
+                        bought.set(true);
                     }
                 });
+
+                if(bought.get()) return;
 
                 double balance = Pets.getInstance().getEconomy().getBalance(player);
                 double price = Pets.getInstance().getPetsConfig().getPetPrices().get(petType.getClassName());

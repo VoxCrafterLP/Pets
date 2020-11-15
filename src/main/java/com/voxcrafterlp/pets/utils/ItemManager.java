@@ -1,14 +1,21 @@
 package com.voxcrafterlp.pets.utils;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * This file was created by VoxCrafter_LP!
@@ -90,6 +97,24 @@ public class ItemManager {
     public ItemStack setHeadOwnerAndBuild(String owner) {
         SkullMeta skullMeta = (SkullMeta) meta;
         skullMeta.setOwner(owner);
+        item.setItemMeta(skullMeta);
+        return item;
+    }
+
+    public ItemStack setHeadValueAndBuild(String value) {
+        SkullMeta skullMeta = (SkullMeta) meta;
+        GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
+
+        gameProfile.getProperties().put("textures", new Property("textures", value));
+
+        try {
+            Field field = skullMeta.getClass().getDeclaredField("profile");
+            field.setAccessible(true);
+            field.set(skullMeta, gameProfile);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         item.setItemMeta(skullMeta);
         return item;
     }

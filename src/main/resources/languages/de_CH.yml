@@ -1,0 +1,50 @@
+prefix: "&8[&cPets&8]&7 "
+error-message: "&c\u00D6ppis isch schief gloffe! Bitte lies d'Logdateie f\u00FCr meh Informatione!"
+
+no-permissions: "&Dir &cisch es n\u00F6d erlaubt, &7de command uszf\u00FCehre!"
+invalid-player: "&cUng\u00FCltige Spieler!"
+invalid-pet: "&cUng\u00FCltigs Pet! &7G\u00FCltigi Pets sind&8: &aChickenPet&8, &aCatPet&8, &aWolfPet&8, &aSlimePet&8, &aSquidPet&8, &aRabbitPet"
+wrong-syntax: "&cFalschi Syntax! &7Bitte benutz &c/pet give <Spieler> <Pet> &7oder &c/pet"
+already-owns-pet: "&cDe Spieler h\u00E4t das Pet scho!"
+
+give-success: "&a{0} &7h\u00E4t es &a{1}&7 becho."
+give-success-receiver: "&a{0} &7h\u00E4t dir es &a{1}&7 geh."
+message-pet-died: "&7Dis Pet isch &ct\u00F6det&7 worde."
+message-pets-disabled: "&7Pets sind ih dere Welt &cdeaktiviert&7."
+message-pet-despawned: "&7Du h\u00E4sch dis &cPet&7 entfernt."
+
+inventory-button-back: " &7\u27A5 &cZrugg"
+inventory-button-back-description: "&7Gah zrugg zum Men\u00FC"
+
+inventory-welcome-title: " &8\u279C &cPets"
+inventory-welcome-pets: " &8\u279C &cDini pets"
+inventory-welcome-shop: " &8\u279C &bShop"
+inventory-welcome-pets-description: "&7Da chasch du dini\n&7eigene Pets verwalte"
+inventory-welcome-shop-description: "&7Da chasch du neui Pets chaufe"
+
+inventory-pets-title: " &8\u279C &cDini pets"
+inventory-pets-nopets: "&cKei Pets"
+inventory-pets-nopets-description: "&7Du h\u00E4sch kei Pets.\n&7Du chasch sie im &bShop&7 chaufe."
+inventory-pets-active: " &7| &aAktiv"
+inventory-pets-inactive: " &7| &cInaktiv"
+inventory-pets-spawned: "&b{0} &7erfolgrich gspawnt. &8(&7Rechtsklick zum Verwalte&8)"
+
+inventory-shop-title: " &8\u279C &bShop"
+inventory-shop-price: " &7| Pris&8: &b"
+inventory-shop-purchased: " &7| &akauft"
+inventory-shop-already-purchased: "&7Du h\u00E4sch das Pet scho &ckauft&7."
+inventory-shop-no-money: "&7Du h\u00E4sch n\u00F6g gnueg &cGeld &7zum das &cPet &7chaufe!"
+inventory-shop-success: "&7Du h\u00E4sch erfolgrich &a{0} &7f\u00FCr &2{1} &7kauft."
+
+inventory-singlepet-title: " &8\u279C &cPet"
+inventory-singlepet-sit: " &7\u27A5 &bAnesitze"
+inventory-singlepet-sit-description: "&7S\u00E4g dim Pet es s\u00F6tt\n&7anesitze"
+inventory-singlepet-follow: " &7\u27A5 &bFolge"
+inventory-singlepet-follow-description: "&7S\u00E4g dim Pet es s\u00F6tt\n&7dir folge"
+inventory-singlepet-pickup: " &7\u27A5 &cUfneh"
+inventory-singlepet-pickup-description: "&7Packt dis Pet ih\n&7din Rucksack"
+inventory-singlepet-pickedup: "&7Du h\u00E4sch dis &cPet &7ufgnoh."
+inventory-singlepet-following: "&7Dis Pet &bfolgt &7dir jetzt."
+inventory-singlepet-sitting: "&7Dis Pet &bsitzt &7jetzt."
+
+# Translated with <3 by Lezurex +

@@ -133,7 +133,9 @@ public class Pets extends JavaPlugin {
      * Loads the default languages into the languages folder
      */
     private void loadLanguages() {
-        Pets.getInstance().saveResource("languages/US_en.yml", false);
+        Pets.getInstance().saveResource("languages/en_US.yml", false);
+        Pets.getInstance().saveResource("languages/de_DE.yml", false);
+        Pets.getInstance().saveResource("languages/de_CH.yml", false);
     }
 
     public String getPrefix() { return this.getLanguageLoader().getTranslationByKey("prefix"); }

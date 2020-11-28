@@ -28,5 +28,5 @@ pet-radius: 10
 pet-invulnerable: true
 # Determines if the pets should receive a random colored name (default: true)
 random-color: true
-# To change the language, please provide an existing language file in the 'languages' folder (default: US_en)
-language-file: US_en
+# To change the language, please provide an existing language file in the 'languages' folder (default: en_US)
+language-file: en_US

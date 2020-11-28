@@ -26,7 +26,7 @@ public class EntityDeathListener implements Listener {
                     PlayerPetManager.getPlayers().get(player).despawnPet();
                     PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
 
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§7Your pet has been §ckilled§7.");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pet-died"));
                     player.playSound(player.getLocation(), Sound.ENDERMAN_DEATH,1,1);
                     event.getDrops().clear();
                     event.setDroppedExp(0);

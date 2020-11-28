@@ -6,10 +6,7 @@ import com.voxcrafterlp.pets.utils.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -30,18 +27,18 @@ public class PlayerInteractAtEntityListener implements Listener {
         if(PlayerPetManager.getPlayers().get(player).getSpawnedPet() != null) {
             if(PlayerPetManager.getPlayers().get(player).getSpawnedPet().getEntity().equals(event.getRightClicked())) {
                 event.setCancelled(true);
-                Inventory inventory = Bukkit.createInventory(null, 27, " §8➜ §cPet");
+                Inventory inventory = Bukkit.createInventory(null, 27, Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-title"));
 
                 for(int i = 0; i<27; i++)
                     inventory.setItem(i, new ItemManager(Material.STAINED_GLASS_PANE, 15).setNoName().build());
 
                 if(!PlayerPetManager.getPlayers().get(player).getSpawnedPet().getPetData().isSitting())
-                    inventory.setItem(11, new ItemManager(Material.HAY_BLOCK).setDisplayName(" §7➥ §bSit down").addLore("§8§m------------------", " ", "§7Tell your pet to", "§7sit down", " ", "§8§m------------------").build());
+                    inventory.setItem(11, new ItemManager(Material.HAY_BLOCK).setDisplayName(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-sit")).addLore(Pets.getInstance().getLanguageLoader().buildDescription(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-sit-description"))).build());
                 else
-                    inventory.setItem(11, new ItemManager(Material.NOTE_BLOCK).setDisplayName(" §7➥ §bFollow").addLore("§8§m------------------", " ", "§7Tell your pet to", "§7follow you", " ", "§8§m------------------").build());
+                    inventory.setItem(11, new ItemManager(Material.NOTE_BLOCK).setDisplayName(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-follow")).addLore(Pets.getInstance().getLanguageLoader().buildDescription(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-follow-description"))).build());
 
                 inventory.setItem(13, PlayerPetManager.getPlayers().get(player).getSpawnedPet().getPetType().getIcon().clone());
-                inventory.setItem(15, new ItemManager(Material.BARRIER).setDisplayName(" §7➥ §cPick up").addLore("§8§m------------------", " ", "§7Puts your pet in", "§7your bag", " ", "§8§m------------------").build());
+                inventory.setItem(15, new ItemManager(Material.BARRIER).setDisplayName(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-pickup")).addLore(Pets.getInstance().getLanguageLoader().buildDescription(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-pickup-description"))).build());
 
 
                 player.openInventory(inventory);

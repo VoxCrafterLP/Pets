@@ -1,0 +1,50 @@
+prefix: "&8[&cPets&8]&7 "
+error-message: "&cSomething went wrong! Please read the logs for more information!"
+
+no-permissions: "&7You &care not permitted &7to execute this command!"
+invalid-player: "&cInvalid player!"
+invalid-pet: "&cInvalid pet! &7Valid pets are&8: &aChickenPet&8, &aCatPet&8, &aWolfPet&8, &aSlimePet&8, &aSquidPet&8, &aRabbitPet"
+wrong-syntax: "&cWrong syntax! &7Please use &c/pet give <player> <pet> &7or &c/pet"
+already-owns-pet: "&cThis player already has this pet!"
+
+give-success: "&a{0} &7received a &a{1}&7."
+give-success-receiver: "&a{0} &7gave you a &a{1}&7."
+message-pet-died: "&7Your pet has been &ckilled&7."
+message-pets-disabled: "&7Pets are &cdisabled &7in this world."
+message-pet-despawned: "&7You despawned your &cpet&7."
+
+inventory-button-back: " &7\u27A5 &cBack"
+inventory-button-back-description: "&7Go back to the menu"
+
+inventory-welcome-title: " &8\u279C &cPets"
+inventory-welcome-pets: " &8\u279C &cYour pets"
+inventory-welcome-shop: " &8\u279C &bShop"
+inventory-welcome-pets-description: "&7Here you can manage\nyour &7own pets"
+inventory-welcome-shop-description: "&7Here you can buy new pets"
+
+inventory-pets-title: " &8\u279C &cYour pets"
+inventory-pets-nopets: "&cNo pets"
+inventory-pets-nopets-description: "&7You don't have any pets.\n&7You can buy them in the &bshop&7."
+inventory-pets-active: " &7| &aactive"
+inventory-pets-inactive: " &7| &cinactive"
+inventory-pets-spawned: "&b{0} &7summoned successfully. &8(&7Rightclick to manage&8)"
+
+inventory-shop-title: " &8\u279C &bShop"
+inventory-shop-price: " &7| Price&8: &b"
+inventory-shop-purchased: " &7| &apurchased"
+inventory-shop-already-purchased: "&7You have already &cpurchased &7this pet."
+inventory-shop-no-money: "&7You don't have enough &cmoney &7to buy this &cpet&7!"
+inventory-shop-success: "&7You successfully bought the &a{0} &7for &2{1}&7."
+
+inventory-singlepet-title: " &8\u279C &cPet"
+inventory-singlepet-sit: " &7\u27A5 &bSit down"
+inventory-singlepet-sit-description: "&7Tell your pet to\n&7sit down"
+inventory-singlepet-follow: " &7\u27A5 &bFollow"
+inventory-singlepet-follow-description: "&7Tell your pet to\n&7follow you"
+inventory-singlepet-pickup: " &7\u27A5 &cPick up"
+inventory-singlepet-pickup-description: "&7Puts your pet in\n&7your bag"
+inventory-singlepet-pickedup: "&7You picked up your &cpet&7."
+inventory-singlepet-following: "&7Your pet is now &bfollowing &7you."
+inventory-singlepet-sitting: "&7Your pet is now &bsitting&7."
+
+

@@ -1,4 +1,4 @@
-# Worlds in which the pets should be disabled
+# Worlds in which the pets should be disabled (default: 'world_the_nether', 'world_the_end')
 worlds-disabled:
   - world_the_nether
   - world_the_end
@@ -20,11 +20,13 @@ pets:
     price: 1000
     enabled: true
 
-# The radius of the pets' effects
+# Permission required to access the admin commands (default: pets.admin)
+admin-permission: pets.admin
+# The radius of the pets' effects (default: 10)
 pet-radius: 10
-# Determines if a pet can take damage
+# Determines if a pet can take damage (default: true)
 pet-invulnerable: true
-# Determines if the pets should receive a random colored name
+# Determines if the pets should receive a random colored name (default: true)
 random-color: true
-# To change the language, please provide an existing language file in the 'languages' folder
+# To change the language, please provide an existing language file in the 'languages' folder (default: US_en)
 language-file: US_en

@@ -26,83 +26,83 @@ import java.util.UUID;
 
 public class ItemManager {
 
-    private ItemStack item;
-    private ItemMeta meta;
+    private ItemStack itemStack;
+    private ItemMeta itemMeta;
 
-    public ItemManager(final ItemStack item) {
-        this.item = item;
-        this.meta = item.getItemMeta();
+    public ItemManager(final ItemStack itemStack) {
+        this.itemStack = itemStack;
+        this.itemMeta = itemStack.getItemMeta();
     }
 
     public ItemManager(final Material material) {
-        this.item = new ItemStack(material);
-        this.meta = item.getItemMeta();
+        this.itemStack = new ItemStack(material);
+        this.itemMeta = this.itemStack.getItemMeta();
     }
 
     public ItemManager(final Material material, int id) {
-        this.item = new ItemStack(material, 1, (byte) id);
-        this.meta = item.getItemMeta();
+        this.itemStack = new ItemStack(material, 1, (byte) id);
+        this.itemMeta = this.itemStack.getItemMeta();
     }
 
     public ItemManager setAmount(final int value) {
-        item.setAmount(value);
+        this.itemStack.setAmount(value);
         return this;
     }
 
     public ItemManager setDisplayName(final String displayName) {
-        meta.setDisplayName(displayName);
+        this.itemMeta.setDisplayName(displayName);
         return this;
     }
 
     public ItemManager addDisplayName(final String displayName) {
-        meta.setDisplayName(meta.getDisplayName() + displayName);
+        this.itemMeta.setDisplayName(this.itemMeta.getDisplayName() + displayName);
         return this;
     }
 
     public ItemManager setNoName() {
-        meta.setDisplayName(" ");
+        this.itemMeta.setDisplayName(" ");
         return this;
     }
 
     public ItemManager addLore(final String... strings) {
-        meta.setLore(Arrays.asList(strings));
+        this.itemMeta.setLore(Arrays.asList(strings));
         return this;
     }
 
     public ItemManager addLore(final List<String> stringList) {
-        meta.setLore(stringList);
+        this.itemMeta.setLore(stringList);
         return this;
     }
 
     public ItemManager setUnbreakable(final boolean unbreakable) {
-        meta.spigot().setUnbreakable(unbreakable);
+        this.itemMeta.spigot().setUnbreakable(unbreakable);
         return this;
     }
 
     public ItemManager addItemFlag(final ItemFlag itemFlag) {
-        meta.addItemFlags(itemFlag);
+        this.itemMeta.addItemFlags(itemFlag);
         return this;
     }
 
     public ItemManager addEnchantment(final Enchantment enchantment, final int level) {
-        meta.addEnchant(enchantment, level, true);
+        this.itemMeta.addEnchant(enchantment, level, true);
         return this;
     }
 
     public ItemManager setSubID(int id) {
-        item.setTypeId(id);
+        this.itemStack.setTypeId(id);
         return this;
     }
 
     public ItemStack setHeadOwnerAndBuild(String owner) {
-        SkullMeta skullMeta = (SkullMeta) meta;
+        SkullMeta skullMeta = (SkullMeta) itemMeta;
         skullMeta.setOwner(owner);
-        item.setItemMeta(skullMeta);
-        return item;
+        this.itemStack.setItemMeta(skullMeta);
+        return this.itemStack;
     }
 
     public ItemStack setHeadValueAndBuild(String value) {
-        SkullMeta skullMeta = (SkullMeta) meta;
+        SkullMeta skullMeta = (SkullMeta) this.itemMeta;
         GameProfile gameProfile = new GameProfile(UUID.randomUUID(), null);
 
         gameProfile.getProperties().put("textures", new Property("textures", value));
@@ -115,13 +115,13 @@ public class ItemManager {
             e.printStackTrace();
         }
 
-        item.setItemMeta(skullMeta);
-        return item;
+        this.itemStack.setItemMeta(skullMeta);
+        return this.itemStack;
     }
 
     public ItemStack build() {
-        item.setItemMeta(meta);
-        return item;
+        this.itemStack.setItemMeta(itemMeta);
+        return this.itemStack;
     }
 
 }

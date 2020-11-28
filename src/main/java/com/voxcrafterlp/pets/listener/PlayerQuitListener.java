@@ -1,7 +1,6 @@
 package com.voxcrafterlp.pets.listener;
 
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

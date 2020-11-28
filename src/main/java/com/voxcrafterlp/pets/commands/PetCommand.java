@@ -31,8 +31,8 @@ public class PetCommand implements CommandExecutor {
             player.openInventory(PlayerPetManager.getPlayers().get(player).getPetGUI().getWelcomeInventory());
             player.playSound(player.getLocation(), Sound.CHEST_OPEN, 2, 2);
         } else {
-            if(!player.hasPermission("pets.admin")) {
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7You §care not permitted §7to execute this command!");
+            if(!player.hasPermission(Pets.getInstance().getPetsConfig().getAdminPermission())) {
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("no-permissions"));
                 return false;
             }
             if(args.length == 3) {
@@ -40,17 +40,17 @@ public class PetCommand implements CommandExecutor {
                     String petString = args[2].toLowerCase();
 
                     if(Bukkit.getPlayer(args[1]) == null) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§cInvalid player!");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("invalid-player"));
                         return false;
                     } else {
                         if(!Bukkit.getPlayer(args[1]).isOnline()) {
-                            player.sendMessage(Pets.getInstance().getPrefix() + "§cThe player has to be online!");
+                            player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("invalid-player"));
                             return false;
                         }
                     }
 
                     if(PetType.getPetTypeFromClassName(petString) == null) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§cInvalid pet! §7Valid pets are§8: §aChickenPet§8, §aCatPet§8, §aWolfPet§8, §aSlimePet§8, §aSquidPet§8, §aRabbitPet");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("invalid-pet"));
                         return false;
                     }
 
@@ -59,7 +59,7 @@ public class PetCommand implements CommandExecutor {
 
                     for(PetData petData : PlayerPetManager.getPlayers().get(targetPlayer).getPets()) {
                         if(petData.getPetType().equalsIgnoreCase(petString)) {
-                            player.sendMessage(Pets.getInstance().getPrefix() + "§cThis player already has this pet!");
+                            player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("already-owns-pet"));
                             return false;
                         }
                     }
@@ -68,18 +68,18 @@ public class PetCommand implements CommandExecutor {
                     try {
                         PlayerPetManager.getPlayers().get(targetPlayer).savePlayerData();
 
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§a" + targetPlayer.getName() + " §7received a §a" + petType.getClassName() + "§7.");
-                        targetPlayer.sendMessage(Pets.getInstance().getPrefix() + "§a" + player.getName() + " §7gave you a §a" + petType.getClassName() + "§7.");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("give-success").replace("{0}", targetPlayer.getName()).replace("{1}", petType.getClassName()));
+                        targetPlayer.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("give-success-receiver").replace("{0}", player.getName()).replace("{1}", petType.getClassName()));
 
                         PlayerPetManager.getPlayers().get(targetPlayer).getPetGUI().buildInventories();
                     } catch (IOException e) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("error-message"));
                         e.printStackTrace();
                     }
                 } else
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§cWrong syntax! §7Please use §c/pet give <player> <pet> §7or §c/pet");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("wrong-syntax"));
             } else
-                player.sendMessage(Pets.getInstance().getPrefix() + "§cWrong syntax! §7Please use §c/pet give <player> <pet> §7or §c/pet");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("wrong-syntax"));
         }
 
         return true;

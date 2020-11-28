@@ -33,7 +33,7 @@ public class InventoryClickListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        if(event.getInventory().getName().equals(" §8➜ §cPets v" + Pets.getInstance().getDescription().getVersion())) {
+        if(event.getInventory().getName().equals(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-welcome-title") + " v" + Pets.getInstance().getDescription().getVersion())) {
             event.setCancelled(true);
             if(event.getCurrentItem().getType() == Material.CHEST) {
                 player.openInventory(PlayerPetManager.getPlayers().get(player).getPetGUI().getOwnInventory());
@@ -46,7 +46,7 @@ public class InventoryClickListener implements Listener {
                 return;
             }
         }
-        if(event.getInventory().getName().equals(" §8➜ §cYour pets")) {
+        if(event.getInventory().getName().equals(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-pets-title"))) {
             event.setCancelled(true);
             if(event.getSlot() == 53) {
                 player.openInventory(PlayerPetManager.getPlayers().get(player).getPetGUI().getWelcomeInventory());
@@ -59,7 +59,7 @@ public class InventoryClickListener implements Listener {
 
                 if(playerPetManager.getSpawnedPet() != null) {
                     if(playerPetManager.getSpawnedPet().getPetType().equals(petType)) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§7You despawned your §cpet§7.");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pet-despawned"));
                         player.closeInventory();
                         player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                         playerPetManager.disableSpawnedPet();
@@ -73,7 +73,7 @@ public class InventoryClickListener implements Listener {
                 }
 
                 if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pets-disabled"));
                     player.closeInventory();
                     player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                     return;
@@ -84,15 +84,15 @@ public class InventoryClickListener implements Listener {
 
                 try {
                     playerPetManager.spawnPet(new PetData(player, petType.getClassName(), getRandomColorCode() + petType.getClassName(), player.getLocation(), false, true));
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§b" + petType.getClassName() + " §7summoned successfully. §8(§7Rightclick to manage§8)");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-pets-spawned").replace("{0}", petType.getClassName()));
                     playerPetManager.getPetGUI().buildInventories();
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("error-message"));
                     e.printStackTrace();
                 }
             }
         }
-        if(event.getInventory().getName().equals(" §8➜ §bShop")) {
+        if(event.getInventory().getName().equals(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-shop-title"))) {
             event.setCancelled(true);
             if(event.getSlot() == 53) {
                 player.openInventory(PlayerPetManager.getPlayers().get(player).getPetGUI().getWelcomeInventory());
@@ -107,7 +107,7 @@ public class InventoryClickListener implements Listener {
 
                 playerPetManager.getPets().forEach(petData -> {
                     if(petData.getPetType().equalsIgnoreCase(petType.getClassName())) {
-                        player.sendMessage(Pets.getInstance().getPrefix() + "§7You have already §cpurchased §7this pet.");
+                        player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-shop-already-purchased"));
                         player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                         bought.set(true);
                     }
@@ -120,7 +120,7 @@ public class InventoryClickListener implements Listener {
                 double difference = balance - price;
 
                 if(difference < 0) {
-                    player.sendMessage(Pets.getInstance().getPrefix() + "§7You don't have enough §cmoney §7to buy this §cpet§7!");
+                    player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-shop-no-money"));
                     player.playSound(player.getLocation(), Sound.ITEM_BREAK,1,1);
                     return;
                 }
@@ -134,19 +134,19 @@ public class InventoryClickListener implements Listener {
                     e.printStackTrace();
                 }
 
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7You successfully bought the §a" + petType.getClassName() + " §7for §2" + Pets.getInstance().getEconomy().format(price) + "§7.");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-shop-success").replace("{0}", petType.getClassName()).replace("{1}", Pets.getInstance().getEconomy().format(price)));
                 player.playSound(player.getLocation(), Sound.LEVEL_UP,1,1);
 
                 playerPetManager.getPetGUI().buildInventories();
                 player.openInventory(playerPetManager.getPetGUI().getShopInventory());
             }
         }
-        if(event.getInventory().getName().equals(" §8➜ §cPet")) {
+        if(event.getInventory().getName().equals(Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-title"))) {
             event.setCancelled(true);
             if(event.getCurrentItem().getType() == Material.BARRIER) {
                 PlayerPetManager.getPlayers().get(player).disableSpawnedPet();
                 PlayerPetManager.getPlayers().get(player).despawnPet();
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7You picked up your §cpet§7.");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-pickedup"));
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 PlayerPetManager.getPlayers().get(player).getPetGUI().buildInventories();
@@ -155,7 +155,7 @@ public class InventoryClickListener implements Listener {
             if(event.getCurrentItem().getType() == Material.HAY_BLOCK) {
                 PlayerPetManager.getPlayers().get(player).getSpawnedPet().getPetData().setSitting(true);
                 PlayerPetManager.getPlayers().get(player).getSpawnedPet().updateSitting();
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7Your pet is now §bsitting§7.");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-sitting"));
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 return;
@@ -163,7 +163,7 @@ public class InventoryClickListener implements Listener {
             if(event.getCurrentItem().getType() == Material.NOTE_BLOCK) {
                 PlayerPetManager.getPlayers().get(player).getSpawnedPet().getPetData().setSitting(false);
                 PlayerPetManager.getPlayers().get(player).getSpawnedPet().updateSitting();
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7Your pet is now §bfollowing §7you.");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("inventory-singlepet-following"));
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.ITEM_PICKUP,1,1);
                 return;

@@ -2,7 +2,6 @@ package com.voxcrafterlp.pets.config;
 
 import com.voxcrafterlp.pets.enums.PetType;
 import lombok.Getter;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
@@ -28,8 +27,13 @@ public class PetsConfig {
    private final YamlConfiguration configuration;
 
    private final HashMap<String, Boolean> enabledPets;
-    private final HashMap<String, Integer> petPrices;
+   private final HashMap<String, Integer> petPrices;
 
+   private final String adminPermission;
+
+    /**
+     * Loads and caches the settings from the config.yml file
+     */
    public PetsConfig() {
         this.configFile = new File("plugins/Pets/config.yml");
         this.configuration = YamlConfiguration.loadConfiguration(this.configFile);
@@ -39,6 +43,7 @@ public class PetsConfig {
         this.petInvulnerability = this.configuration.getBoolean("pet-invulnerable");
         this.randomColor = this.configuration.getBoolean("random-color");
         this.languageFile = this.configuration.getString("language-file");
+        this.adminPermission = this.configuration.getString("admin-permission");
 
         this.enabledPets = new HashMap<>();
         this.petPrices = new HashMap<>();
@@ -46,14 +51,6 @@ public class PetsConfig {
             this.enabledPets.put(petTypes.getClassName(), this.configuration.getBoolean("pets." + petTypes.getClassName() + ".enabled"));
             this.petPrices.put(petTypes.getClassName(), this.configuration.getInt("pets." + petTypes.getClassName() + ".price"));
         }
-   }
-
-   public void save() {
-       try {
-           this.configuration.save(this.configFile);
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
    }
 
 }

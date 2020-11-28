@@ -23,7 +23,7 @@ public class PlayerChangedWorldListener implements Listener {
         if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
             PlayerPetManager playerPetManager = PlayerPetManager.getPlayers().get(player);
             if(playerPetManager.getSpawnedPet() != null) {
-                player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
+                player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pets-disabled"));
                 playerPetManager.disableSpawnedPet();
                 playerPetManager.despawnPet();
                 playerPetManager.getPetGUI().buildInventories();

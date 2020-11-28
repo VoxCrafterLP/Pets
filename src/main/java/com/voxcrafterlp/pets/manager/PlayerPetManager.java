@@ -75,7 +75,7 @@ public class PlayerPetManager {
             }
         }
         if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
-            player.sendMessage(Pets.getInstance().getPrefix() + "§7Pets are §cdisabled §7in this world.");
+            player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pets-disabled"));
             return;
         }
 
@@ -86,7 +86,7 @@ public class PlayerPetManager {
                         try {
                             this.spawnPet(petData);
                         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                            player.sendMessage(Pets.getInstance().getPrefix() + "§cSomething went wrong! Please read the logs for more information!");
+                            player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pets-disabled"));
                             e.printStackTrace();
                         }
                     }

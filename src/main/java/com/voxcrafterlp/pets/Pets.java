@@ -32,6 +32,9 @@ public class Pets extends JavaPlugin {
 
     private Economy economy;
 
+    /**
+     * Plugin startup and initializes the main class
+     */
     public void onEnable() {
         instance = this;
 
@@ -60,6 +63,10 @@ public class Pets extends JavaPlugin {
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
     }
 
+    /**
+     * Loads the default languages into the languages folder and
+     * loads the settings from the config.yml file
+     */
     private void loadConfig() {
         this.loadLanguages();
         this.saveDefaultConfig();
@@ -78,9 +85,13 @@ public class Pets extends JavaPlugin {
 
         this.petsConfig = new PetsConfig();
         new File("plugins/Pets/languages/").mkdir();
-        this.languageLoader = new LanguageLoader("plugins/Pets/languages/" + this.petsConfig.getLanguageFile() + ".lang");
+        this.languageLoader = new LanguageLoader("plugins/Pets/languages/" + this.petsConfig.getLanguageFile() + ".yml");
     }
 
+    /**
+     * Checks if the Vault plugin is installed. If so, this method gets loads the economy of the server
+     * @return Returns if the Vault plugin is installed and working properly
+     */
     private boolean checkForVault() {
         Bukkit.getConsoleSender().sendMessage("§8===========================================");
         Bukkit.getConsoleSender().sendMessage("§7Checking for §aVault§7...");
@@ -118,11 +129,14 @@ public class Pets extends JavaPlugin {
         return true;
     }
 
+    /**
+     * Loads the default languages into the languages folder
+     */
     private void loadLanguages() {
-        Pets.getInstance().saveResource("languages/US_en.lang", false);
+        Pets.getInstance().saveResource("languages/US_en.yml", false);
     }
 
-    public String getPrefix() { return "§8[§cPets§8]§7 "; }
+    public String getPrefix() { return this.getLanguageLoader().getTranslationByKey("prefix"); }
 
     public static Pets getInstance() { return instance; }
 }

@@ -22,7 +22,8 @@ This is a simple spigot plugin that allows players to buy and spawn their own pe
 4. Check the console to ensure that the plugin detected Vault and is working properly.
 5. Locate and open the config file in `/plugins/Pets/config.yml`.
 6. Configure the plugin to your needs.
-7. Have fun!
+7. If you plan to use a MySQL database, enter the credentials
+8. Have fun!
 
 ## Config
 ### worlds-disabled

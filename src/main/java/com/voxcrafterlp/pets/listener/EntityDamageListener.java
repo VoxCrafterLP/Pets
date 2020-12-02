@@ -2,6 +2,8 @@ package com.voxcrafterlp.pets.listener;
 
 import com.voxcrafterlp.pets.Pets;
 import com.voxcrafterlp.pets.manager.PlayerPetManager;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;

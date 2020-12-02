@@ -19,6 +19,9 @@ pets:
   RabbitPet:
     price: 1000
     enabled: true
+  MushroomCowPet:
+    price: 1200
+    enabled: true
 
 # Permission required to access the admin commands (default: pets.admin)
 admin-permission: pets.admin
@@ -30,3 +33,12 @@ pet-invulnerable: true
 random-color: true
 # To change the language, please provide an existing language file in the 'languages' folder (default: en_US)
 language-file: en_US
+
+# Enables/Disables mysql support (default: false)
+mysql-enabled: false
+
+mysql-hostname: 'localhost'
+mysql-username: 'root'
+mysql-password: ''
+mysql-database: ''
+mysql-port: 3306

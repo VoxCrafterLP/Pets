@@ -31,6 +31,13 @@ public class PetsConfig {
 
    private final String adminPermission;
 
+   private final boolean databaseEnabled;
+   private final String databaseHost;
+   private final String databaseUsername;
+   private final String databasePassword;
+   private final String databaseName;
+   private final int databasePort;
+
     /**
      * Loads and caches the settings from the config.yml file
      */
@@ -44,6 +51,14 @@ public class PetsConfig {
         this.randomColor = this.configuration.getBoolean("random-color");
         this.languageFile = this.configuration.getString("language-file");
         this.adminPermission = this.configuration.getString("admin-permission");
+
+
+        this.databaseEnabled = this.configuration.getBoolean("mysql-enabled");
+        this.databaseHost = this.configuration.getString("mysql-hostname");
+        this.databaseUsername = this.configuration.getString("mysql-username");
+        this.databasePassword = this.configuration.getString("mysql-password");
+        this.databaseName = this.configuration.getString("mysql-database");
+        this.databasePort = this.configuration.getInt("mysql-port");
 
         this.enabledPets = new HashMap<>();
         this.petPrices = new HashMap<>();

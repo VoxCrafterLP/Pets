@@ -3,8 +3,13 @@ package com.voxcrafterlp.pets;
 import com.voxcrafterlp.pets.commands.PetCommand;
 import com.voxcrafterlp.pets.config.LanguageLoader;
 import com.voxcrafterlp.pets.config.PetsConfig;
+import com.voxcrafterlp.pets.database.Database;
+import com.voxcrafterlp.pets.database.DatabaseAdapter;
+import com.voxcrafterlp.pets.enums.RowType;
 import com.voxcrafterlp.pets.gui.InventoryClickListener;
 import com.voxcrafterlp.pets.listener.*;
+import com.voxcrafterlp.pets.objects.Insert;
+import com.voxcrafterlp.pets.objects.Row;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -32,6 +37,9 @@ public class Pets extends JavaPlugin {
 
     private Economy economy;
 
+    private Database mysqlDatabase;
+    private DatabaseAdapter databaseAdapter;
+
     /**
      * Plugin startup and initializes the main class
      */
@@ -44,6 +52,12 @@ public class Pets extends JavaPlugin {
         this.loadListener();
 
         this.loadConfig();
+        this.loadDatabase();
+    }
+
+    public void onDisable() {
+        if(this.getPetsConfig().isDatabaseEnabled())
+            this.mysqlDatabase.disconnect();
     }
 
     private void loadCommands() {
@@ -61,6 +75,7 @@ public class Pets extends JavaPlugin {
         pluginManager.registerEvents(new EntityDeathListener(), this);
         pluginManager.registerEvents(new PlayerInteractAtEntityListener(), this);
         pluginManager.registerEvents(new PlayerChangedWorldListener(), this);
+        pluginManager.registerEvents(new EntityDamageByEntityListener(), this);
     }
 
     /**
@@ -72,6 +87,12 @@ public class Pets extends JavaPlugin {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
 
+        this.petsConfig = new PetsConfig();
+        new File("plugins/Pets/languages/").mkdir();
+        this.languageLoader = new LanguageLoader("plugins/Pets/languages/" + this.petsConfig.getLanguageFile() + ".yml");
+    }
+
+    private void loadPlayerData() {
         this.file = new File("plugins/Pets/playerdata.json");
         try {
             if(this.file.createNewFile()) {
@@ -82,10 +103,6 @@ public class Pets extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.petsConfig = new PetsConfig();
-        new File("plugins/Pets/languages/").mkdir();
-        this.languageLoader = new LanguageLoader("plugins/Pets/languages/" + this.petsConfig.getLanguageFile() + ".yml");
     }
 
     /**
@@ -136,6 +153,25 @@ public class Pets extends JavaPlugin {
         Pets.getInstance().saveResource("languages/en_US.yml", false);
         Pets.getInstance().saveResource("languages/de_DE.yml", false);
         Pets.getInstance().saveResource("languages/de_CH.yml", false);
+    }
+
+    /**
+     * Connects to the database if enabled int the config
+     */
+    private void loadDatabase() {
+        if(this.getPetsConfig().isDatabaseEnabled()) {
+            Bukkit.getConsoleSender().sendMessage("§aMySQL enabled. Connecting...");
+            this.mysqlDatabase = new Database(this.getPetsConfig().getDatabaseHost(),
+                    this.getPetsConfig().getDatabaseUsername(), this.getPetsConfig().getDatabasePassword(),
+                    this.getPetsConfig().getDatabaseName(), this.getPetsConfig().getDatabasePort());
+            this.mysqlDatabase.connect();
+            this.databaseAdapter = new DatabaseAdapter(this.mysqlDatabase);
+            this.databaseAdapter.createTable("pets", new Row("PETDATA", RowType.TEXT));
+
+            if(!this.databaseAdapter.containsEntry("pets"))
+                this.databaseAdapter.insertIntoTable("pets", new Insert("PETDATA", "{}"));
+        } else
+            this.loadPlayerData();
     }
 
     public String getPrefix() { return this.getLanguageLoader().getTranslationByKey("prefix"); }

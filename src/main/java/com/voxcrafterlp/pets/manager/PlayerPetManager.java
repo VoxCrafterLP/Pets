@@ -50,30 +50,46 @@ public class PlayerPetManager {
     }
 
     private void loadData() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(Pets.getInstance().getFile()));
-
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            JSONObject jsonObject = new JSONObject(line);
-
-            if(jsonObject.isNull(player.getUniqueId().toString())) {
+        if(Pets.getInstance().getPetsConfig().isDatabaseEnabled()) {
+            JSONObject jsonObject = new JSONObject(Pets.getInstance().getDatabaseAdapter().getStringFromTable("pets", "PETDATA"));
+            if(jsonObject.isNull(player.getUniqueId().toString()))
                 jsonObject.put(player.getUniqueId().toString(), new JSONObject().put("pets", new JSONArray()));
 
-                new FileWriter("plugins/Pets/playerdata.json", false).close();
-                FileWriter fileWriter = new FileWriter(Pets.getInstance().getFile());
-                fileWriter.write(jsonObject.toString());
-                fileWriter.close();
-
+            if(jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length() == 0)
                 return;
-            }
 
-            if(jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length() == 0) return;
-
-            for(int i = 0; i< jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length(); i++) {
+            for(int i = 0; i < jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length(); i++) {
                 JSONObject pet = jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").getJSONObject(i);
                 this.pets.add(new PetData(player, pet.getString("type"), getRandomColorCode() + pet.getString("name"), player.getLocation(), false, pet.getBoolean("enabled")));
             }
+        } else {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(Pets.getInstance().getFile()));
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                JSONObject jsonObject = new JSONObject(line);
+
+                if(jsonObject.isNull(player.getUniqueId().toString())) {
+                    jsonObject.put(player.getUniqueId().toString(), new JSONObject().put("pets", new JSONArray()));
+
+                    new FileWriter("plugins/Pets/playerdata.json", false).close();
+                    FileWriter fileWriter = new FileWriter(Pets.getInstance().getFile());
+                    fileWriter.write(jsonObject.toString());
+                    fileWriter.close();
+
+                    return;
+                }
+
+                if(jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length() == 0)
+                    return;
+
+                for(int i = 0; i < jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").length(); i++) {
+                    JSONObject pet = jsonObject.getJSONObject(player.getUniqueId().toString()).getJSONArray("pets").getJSONObject(i);
+                    this.pets.add(new PetData(player, pet.getString("type"), getRandomColorCode() + pet.getString("name"), player.getLocation(), false, pet.getBoolean("enabled")));
+                }
+            }
         }
+
         if(Pets.getInstance().getPetsConfig().getDisabledWorlds().contains(player.getLocation().getWorld().getName())) {
             player.sendMessage(Pets.getInstance().getPrefix() + Pets.getInstance().getLanguageLoader().getTranslationByKey("message-pets-disabled"));
             return;
@@ -96,13 +112,10 @@ public class PlayerPetManager {
     }
 
     public void savePlayerData() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(Pets.getInstance().getFile()));
-
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-
-            if(isValidJSON(line)) {
-                JSONObject jsonObject = new JSONObject(line);
+        if(Pets.getInstance().getPetsConfig().isDatabaseEnabled()) {
+            final String jsonString = Pets.getInstance().getDatabaseAdapter().getStringFromTable("pets", "PETDATA");
+            if(isValidJSON(jsonString)) {
+                JSONObject jsonObject = new JSONObject(jsonString);
                 JSONArray jsonArray = new JSONArray();
 
                 this.pets.forEach(petData -> {
@@ -112,10 +125,30 @@ public class PlayerPetManager {
                 jsonObject.remove(player.getUniqueId().toString());
                 jsonObject.put(player.getUniqueId().toString(), new JSONObject().put("pets", jsonArray));
 
-                new FileWriter("plugins/Pets/playerdata.json", false).close();
-                FileWriter fileWriter = new FileWriter(Pets.getInstance().getFile());
-                fileWriter.write(jsonObject.toString());
-                fileWriter.close();
+                Pets.getInstance().getDatabaseAdapter().updateValue("pets", "PETDATA", jsonObject.toString());
+            }
+        } else {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(Pets.getInstance().getFile()));
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+
+                if(isValidJSON(line)) {
+                    JSONObject jsonObject = new JSONObject(line);
+                    JSONArray jsonArray = new JSONArray();
+
+                    this.pets.forEach(petData -> {
+                        jsonArray.put(new JSONObject().put("type", petData.getPetType()).put("name", petData.getDisplayMame()).put("enabled", petData.isEnabled()));
+                    });
+
+                    jsonObject.remove(player.getUniqueId().toString());
+                    jsonObject.put(player.getUniqueId().toString(), new JSONObject().put("pets", jsonArray));
+
+                    new FileWriter("plugins/Pets/playerdata.json", false).close();
+                    FileWriter fileWriter = new FileWriter(Pets.getInstance().getFile());
+                    fileWriter.write(jsonObject.toString());
+                    fileWriter.close();
+                }
             }
         }
     }

@@ -5,7 +5,8 @@ This is a simple spigot plugin that allows players to buy and spawn their own pe
 ## Features
 
 - Advanced GUI
-- 5 available pets (more coming soon)
+- 6 available pets (more coming soon)
+- MySQL support
 - Fully customizable
 - Multiple languages
 

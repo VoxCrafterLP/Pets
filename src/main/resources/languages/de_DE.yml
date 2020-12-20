@@ -17,7 +17,7 @@ inventory-button-back: " &7\u27A5 &cZur\u00FCck"
 inventory-button-back-description: "&7Gehe zur\u00FCck zum Men\u00FC"
 
 inventory-welcome-title: " &8\u279C &cPets"
-inventory-welcome-pets: " &8\u279C &cDeine pets"
+inventory-welcome-pets: " &8\u279C &cDeine Pets"
 inventory-welcome-shop: " &8\u279C &bShop"
 inventory-welcome-pets-description: "&7Hier kannst du deine\n&7Pets verwalten"
 inventory-welcome-shop-description: "&7Hier kannst du neue\n&7Pets kaufen"
@@ -32,7 +32,7 @@ inventory-pets-spawned: "&b{0} &7erfolgreich gespawnt. &8(&7Rechtsklick zum Verw
 inventory-shop-title: " &8\u279C &bShop"
 inventory-shop-price: " &7| Preis&8: &b"
 inventory-shop-purchased: " &7| &agekauft"
-inventory-shop-already-purchased: "&Du hast dieses Pet bereits &cgekauft&7."
+inventory-shop-already-purchased: "&7Du hast dieses Pet bereits &cgekauft&7."
 inventory-shop-no-money: "&7Du hast nicht gen\u00FCgend &cGeld&7, um dieses &c&7Pet zu kaufen!"
 inventory-shop-success: "&7Du hast das &a{0} &7erfolgreich f\u00FCr &2{1} &7gekauft."
 

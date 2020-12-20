@@ -68,7 +68,7 @@ public class CatPet extends CustomPet{
             }
         });
         if(!this.petData.isSitting()) {
-            if(this.entity.getLocation().distance(this.player.getLocation()) > 25)
+            if(this.entity.getLocation().distance(this.player.getLocation()) > 25 && this.player.isOnGround())
                 this.entity.teleport(this.player.getLocation());
             if(this.entity.getLocation().distance(player.getLocation()) > 5.0)
                 followPlayer();

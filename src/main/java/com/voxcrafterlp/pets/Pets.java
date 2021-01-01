@@ -153,6 +153,7 @@ public class Pets extends JavaPlugin {
         Pets.getInstance().saveResource("languages/en_US.yml", false);
         Pets.getInstance().saveResource("languages/de_DE.yml", false);
         Pets.getInstance().saveResource("languages/de_CH.yml", false);
+        Pets.getInstance().saveResource("languages/lu_LU.yml", false);
     }
 
     /**

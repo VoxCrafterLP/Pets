@@ -1,0 +1,51 @@
+prefix: "&8[&cPets&8]&7 "
+error-message: "&cEppes ass schif gelaf! Fir m\u00E9i Informatiounen ze kr\u00E9ien, lies dir wann ech gelift d'Logs duerch!"
+
+no-permissions: "&7Du &cd\u00E4erfs d\u00EBse Befeel net &7ausf\u00E9ieren"
+invalid-player: "&cOng\u00FCltege Spiller!"
+invalid-pet: "&cOng\u00FClteget Pet! &7G\u00FClteg Pets sinn:&8: &aChickenPet&8, &aCatPet&8, &aWolfPet&8, &aSlimePet&8, &aSquidPet&8, &aRabbitPet"
+wrong-syntax: "&cFalsch Syntax! &7Benotz wann ech gelift &c/pet give <Spiller> <Pet> &7oder &c/pet"
+already-owns-pet: "&cD\u00EBse Spiller huet d\u00EBst Pet schonn!"
+
+give-success: "&a{0} &7huet een &a{1} &7kritt."
+give-success-receiver: "&a{0} &7huet dir een &a{1} &7ginn."
+message-pet-died: "&7D\u00E4i Pet gouf &c\u00EBmbruecht&7."
+message-pets-disabled: "&7Pets sinn an d\u00EBser Welt &cdesaktiv\u00E9iert&7."
+message-pet-despawned: "&7Du hues d\u00E4i &cPet &7despawnt."
+
+inventory-button-back: " &7\u27A5 &cZer\u00E9ck"
+inventory-button-back-description: "&7G\u00E9i zer\u00E9ck zum Men\u00FC"
+
+inventory-welcome-title: " &8\u279C &cPets"
+inventory-welcome-pets: " &8\u279C &cD\u00EBng Pets"
+inventory-welcome-shop: " &8\u279C &bShop"
+inventory-welcome-pets-description: "&7Hei kanns du d\u00EBng\n&7Pets verwalten"
+inventory-welcome-shop-description: "&7Hei kanns du n\u00E9i\n&7Pets kafen"
+
+inventory-pets-title: " &8\u279C &cD\u00EBng Pets"
+inventory-pets-nopets: "&cKeng Pets"
+inventory-pets-nopets-description: "&7Du hues keng Pets.\n&7Du kanns dir da am &bShop &7kafen."
+inventory-pets-active: " &7| &aaktiv"
+inventory-pets-inactive: " &7| &cinaktiv"
+inventory-pets-spawned: "&b{0} &7erfollegr\u00E4ich gespawnt. &8(&7Rietsklick fir ze Verwalten&8)"
+
+inventory-shop-title: " &8\u279C &bShop"
+inventory-shop-price: " &7| Pr\u00E4is&8: &b"
+inventory-shop-purchased: " &7| &akaaft"
+inventory-shop-already-purchased: "&7Du hues d\u00EBst Pet schonn &ckaaft&7."
+inventory-shop-no-money: "&7Du hues net genuch &cSuen&7, dir d\u00EBst &c&7Pet ze kafen!"
+inventory-shop-success: "&7Du hues d'&a{0} &7erfollegr\u00E4ich fir &2{1} &7kaaf."
+
+inventory-singlepet-title: " &8\u279C &cPet"
+inventory-singlepet-sit: " &7\u27A5 &bDohis\u00EBtzen"
+inventory-singlepet-sit-description: "&7Befiel d\u00EBngem Pet\n&7sech dohinzes\u00EBtzen"
+inventory-singlepet-follow: " &7\u27A5 &bNogoen"
+inventory-singlepet-follow-description: "&7Befiel d\u00EBngem Pet\n&7dir nozegoen"
+inventory-singlepet-pickup: " &7\u27A5 &cOphiewen"
+inventory-singlepet-pickup-description: "&7Verstaue d\u00E4i Pet an\n&7dengem Rucksak"
+inventory-singlepet-pickedup: "&7Du hues d\u00E4i &cPet &7opgehuewen."
+inventory-singlepet-following: "&7D\u00E4i Pet &bgeet &7dir elo no."
+inventory-singlepet-sitting: "&7D\u00E4i Pet &bs\u00EBtzt &7elo."
+
+# Translated by VoxCrafter_LP
+

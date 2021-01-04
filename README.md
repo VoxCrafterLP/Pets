@@ -78,6 +78,7 @@ language-file: en_US
 - en_US (American English)
 - de_DE (German)
 - de_CH (Swiss German)
+- lu_LU (Luxembourgish)
 
 ## Commands
 
